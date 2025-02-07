@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3.8.5' // Uses Maven Docker Image
+        }
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -8,9 +12,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                withMaven(maven: 'mvn') {
-                sh "mvn clean package"
-                }    
+                sh 'mvn clean package'
             }
         }
         stage('Archive Artifacts') {
